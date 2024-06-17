@@ -1,7 +1,10 @@
 spring:
   config:
     import: optional:file:.env[.properties]
-weather-api:
-  key: ${API_KEY}
-  
-
+application:
+  api:
+    key: ${API_KEY}
+  view:
+    window:
+      width: 700
+      height: 600

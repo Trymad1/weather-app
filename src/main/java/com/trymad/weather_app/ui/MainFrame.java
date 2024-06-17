@@ -1,13 +1,23 @@
 package com.trymad.weather_app.ui;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MainFrame extends JFrame {
 
-  public MainFrame() {
-    setSize(300, 300);
+  public MainFrame(Environment environment) {
+    final Dimension windowSize = getWindowDimenson(environment);
+    setSize(windowSize);
+  }
+
+  private Dimension getWindowDimenson(Environment env) {
+    return new Dimension(
+        Integer.valueOf(env.getProperty("application.view.window.width")),
+        Integer.valueOf(env.getProperty("application.view.window.height")));
   }
 }
