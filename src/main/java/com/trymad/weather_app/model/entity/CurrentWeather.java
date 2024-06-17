@@ -1,4 +1,4 @@
-package com.trymad.weather_app.model;
+package com.trymad.weather_app.model.entity;
 
 import java.time.LocalDateTime;
 
@@ -6,12 +6,13 @@ import lombok.Data;
 
 @Data
 public class CurrentWeather {
+
+  private Condition condition;
   private long last_updated_epoch;
   private LocalDateTime last_updated;
   private float temp_c;
   private float temp_f;
   private boolean isDay;
-  private Condition condition;
   private float wind_mph;
   private float wind_kph;
   private int wind_degree;

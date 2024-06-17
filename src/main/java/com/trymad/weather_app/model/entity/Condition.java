@@ -1,4 +1,4 @@
-package com.trymad.weather_app.model;
+package com.trymad.weather_app.model.entity;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.trymad.weather_app.model;
+package com.trymad.weather_app.model.entity;
 
 import java.util.Date;
 
@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class Forecast {
+
+  private Condition condition;
   private Date date;
   private long date_epoch;
   private float maxtemp_c;
@@ -25,6 +27,6 @@ public class Forecast {
   private int dailyChanceOfRain;
   private boolean dailyWillItSnow;
   private boolean dailyChanceOfSnow;
-  private Condition condition;
   private float uv;
+
 }

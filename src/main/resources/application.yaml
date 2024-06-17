@@ -3,6 +3,7 @@ spring:
     import: optional:file:.env[.properties]
 application:
   api:
+    url: http://api.weatherapi.com/v1/current.json
     key: ${API_KEY}
   view:
     window:
