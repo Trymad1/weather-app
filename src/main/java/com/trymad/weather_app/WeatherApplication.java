@@ -3,12 +3,11 @@ package com.trymad.weather_app;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.trymad.weather_app.model.MainFrame;
+import com.trymad.weather_app.ui.MainFrame;
 
 @SpringBootApplication
 public class WeatherApplication {

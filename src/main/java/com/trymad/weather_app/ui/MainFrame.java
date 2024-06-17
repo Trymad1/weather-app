@@ -1,4 +1,4 @@
-package com.trymad.weather_app.model;
+package com.trymad.weather_app.ui;
 
 import javax.swing.JFrame;
 
