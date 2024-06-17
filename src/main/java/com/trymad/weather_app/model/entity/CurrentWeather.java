@@ -2,16 +2,26 @@ package com.trymad.weather_app.model.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentWeather {
 
   private Condition condition;
   private long last_updated_epoch;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime last_updated;
+
   private float temp_c;
   private float temp_f;
+
+  @JsonProperty("is_day")
   private boolean isDay;
   private float wind_mph;
   private float wind_kph;

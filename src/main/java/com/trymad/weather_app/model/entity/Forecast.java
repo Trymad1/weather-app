@@ -1,16 +1,24 @@
 package com.trymad.weather_app.model.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Forecast {
 
   private Condition condition;
-  private Date date;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  private LocalDate date;
+
   private long date_epoch;
-  private float maxtemp_c;
+  private double maxtemp_c;
   private float maxtemp_f;
   private float mintemp_f;
   private float avgtemp_c;
@@ -28,5 +36,5 @@ public class Forecast {
   private boolean dailyWillItSnow;
   private boolean dailyChanceOfSnow;
   private float uv;
-
+  List<CurrentWeather> hours;
 }
