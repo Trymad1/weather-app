@@ -14,12 +14,12 @@
 	<artifactId>weather-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Weather application</name>
-	<description>Student practice assignment to create a weather forecast application</description>
+	<description>Student project for practice, weather application</description>
 
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
