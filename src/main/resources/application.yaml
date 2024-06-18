@@ -8,5 +8,5 @@ application:
     key: ${API_KEY}
   view:
     window:
-      width: 700
-      height: 600
+      width: 900
+      height: 500

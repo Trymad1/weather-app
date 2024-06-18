@@ -1,5 +1,9 @@
 package com.trymad.weather_app;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.util.Locale;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -19,8 +23,9 @@ public class WeatherApplication {
 				.run(args);
 
 		SwingUtilities.invokeLater(() -> {
-			JFrame test = context.getBean(MainFrame.class);
-			test.setVisible(true);
+			JFrame mainFrame = context.getBean(MainFrame.class);
+			mainFrame.setVisible(true);
 		});
 	}
+
 }
