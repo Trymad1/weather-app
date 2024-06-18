@@ -73,13 +73,13 @@ public class MainFrame extends JFrame {
     private final String WIND_IMAGE_PATH = "static/image/wind.png";
     private final String WATER_IMAGE_PATH = "static/image/water.png";
     private final String TEST_IMAGE_PATH = "static/image/test.png";
+    public final String TIME_TEMPLATE = "Сейчас %s. Вчера в это время";
 
     public MainFrame(Environment environment, MainFramePresenter mainFramePresenter) throws IOException {
         this.mainFramePresenter = mainFramePresenter;
 
         initComponents();
         setSize(getWindowDimension(environment));
-        clearFields();
         addActionListeners();
 
     }
@@ -115,7 +115,8 @@ public class MainFrame extends JFrame {
     }
 
     private void addActionListeners() {
-        cityFindButton.addActionListener(mainFramePresenter::searchButtonPressed);
+        cityFindButton
+                .addActionListener(event -> mainFramePresenter.searchButtonPressed(event, cityFindTextField.getText()));
         assignHotkey(cityFindButton, "ENTER");
     }
 

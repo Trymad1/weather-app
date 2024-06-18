@@ -31,11 +31,11 @@ public class ApiWeatherLoader implements WeatherLoader {
   public WeatherData getForecastDataByCityName(String cityName, int days, boolean aqi, boolean alerts) {
     WeatherData weatherData = null;
     try {
-      final WeatherData response = restClient.get()
-      .uri(generateForecastParamRequest(cityName, days, aqi, alerts))
-      .accept(DATA_FORMAT)
-      .retrieve()
-      .body(WeatherData.class);
+      weatherData = restClient.get()
+          .uri(generateForecastParamRequest(cityName, days, aqi, alerts))
+          .accept(DATA_FORMAT)
+          .retrieve()
+          .body(WeatherData.class);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -49,10 +49,10 @@ public class ApiWeatherLoader implements WeatherLoader {
 
     try {
       weatherData = restClient.get()
-      .uri(generateHistoryParamRequest(cityName, date))
-      .accept(DATA_FORMAT)
-      .retrieve()
-      .body(WeatherData.class);
+          .uri(generateHistoryParamRequest(cityName, date))
+          .accept(DATA_FORMAT)
+          .retrieve()
+          .body(WeatherData.class);
     } catch (Exception e) {
       e.printStackTrace();
     }

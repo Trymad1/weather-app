@@ -17,7 +17,7 @@ public class MainFramePresenterImpl implements MainFramePresenter {
   }
 
   @Override
-  public void searchButtonPressed(ActionEvent event) {
-
+  public void searchButtonPressed(ActionEvent event, String cityName) {
+    weatherUpdator.getWeatherInformation(cityName);
   }
 }
