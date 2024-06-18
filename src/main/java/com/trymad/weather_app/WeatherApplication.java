@@ -1,9 +1,5 @@
 package com.trymad.weather_app;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.util.Locale;
-
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -12,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.trymad.weather_app.ui.MainFrame;
 
 @SpringBootApplication
@@ -22,10 +19,10 @@ public class WeatherApplication {
 				.web(WebApplicationType.NONE)
 				.run(args);
 
+		FlatDarkLaf.setup();
 		SwingUtilities.invokeLater(() -> {
 			JFrame mainFrame = context.getBean(MainFrame.class);
 			mainFrame.setVisible(true);
 		});
 	}
-
 }
