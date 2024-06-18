@@ -24,6 +24,14 @@ public class WeatherData {
   }
 
   public boolean containForecastList() {
-    return !forecastList.isEmpty();
+    return forecastList != null;
+  }
+
+  public boolean isHistoryData() {
+    return !containCurrentWeather() && (containLocation() && containForecastList());
+  }
+
+  public boolean isForecastData() {
+    return containLocation() && containCurrentWeather() && containForecastList();
   }
 }

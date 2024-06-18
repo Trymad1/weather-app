@@ -37,6 +37,7 @@ public class WeatherDataDeserializer extends JsonDeserializer<WeatherData> {
       weatherData.setCurrentWeather(weather);
 
     }
+    
     if (root.has("location")) {
       final JsonNode locationNode = root.path("location");
       checkLocalDateValidity(mapper, locationNode);
