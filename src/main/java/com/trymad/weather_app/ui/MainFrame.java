@@ -63,6 +63,7 @@ public class MainFrame extends JFrame {
     public MainFrame(Environment environment) throws IOException {
         initComponents();
         setSize(getWindowDimension(environment));
+        clearFields();
     }
 
     private ClassPathResource getImageResouce(String path) {
@@ -93,6 +94,40 @@ public class MainFrame extends JFrame {
 
         forecastImageDay3
                 .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
+    }
+
+    private void clearFields() {
+        windInfoLabel.setText("");
+        waterPercentsLabel.setText("");
+        temperatureLabel.setText("");
+        temperatureFeelsLabel.setText("");
+        weatherInfoLabel.setText("");
+        cityYesterdayTimeInfoLabel.setText("Сейчас 00:00. Вчера в это время");
+        cityYesterdayTemperatureLabel.setText("");
+        cityNameLabel.setText("");
+        weatherImageLabel1.setIcon(null);
+
+        forecastWeekendDay1.setText("");
+        forecastDateDay1.setText("");
+        forecastImageDay1.setIcon(null);
+        forecastTemperatureDay1.setText("");
+        forecastFeelTemperatureDay1.setText("");
+        forecastConditionDay1.setText("");
+
+        forecastWeekendDay2.setText("");
+        forecastDateDay2.setText("");
+        forecastImageDay2.setIcon(null);
+        forecastTemperatureDay2.setText("");
+        forecastFeelTemperatureDay2.setText("");
+        forecastConditionDay2.setText("");
+
+        forecastWeekendDay3.setText("");
+        forecastDateDay3.setText("");
+        forecastImageDay3.setIcon(null);
+        forecastTemperatureDay3.setText("");
+        forecastFeelTemperatureDay3.setText("");
+        forecastCondititonDay3.setText("");
+
     }
 
     private void initComponents() throws IOException {
@@ -142,6 +177,8 @@ public class MainFrame extends JFrame {
         forecastConditionDay1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        loadImages();
 
         cityFindTextField.setFont(new java.awt.Font("Segoe UI", 0, 18));
 
