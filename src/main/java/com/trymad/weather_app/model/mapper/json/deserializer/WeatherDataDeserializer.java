@@ -29,22 +29,26 @@ public class WeatherDataDeserializer extends JsonDeserializer<WeatherData> {
     final ObjectMapper mapper = (ObjectMapper) p.getCodec();
     final JsonNode root = mapper.readTree(p);
     mapper.registerModule(new JavaTimeModule());
-
-    final JsonNode currentNode = root.path("current");
-    final JsonNode locationNode = root.path("location");
-    final JsonNode forecastNode = root.path("forecast").path("forecastday");
-
     final WeatherData weatherData = new WeatherData();
 
-    final CurrentWeather weather = mapper.treeToValue(currentNode, CurrentWeather.class);
-    checkLocalDateValidity(mapper, locationNode);
-    final Location location = mapper.treeToValue(locationNode, Location.class);
+    if (root.has("current")) {
+      final JsonNode currentNode = root.path("current");
+      final CurrentWeather weather = mapper.treeToValue(currentNode, CurrentWeather.class);
+      weatherData.setCurrentWeather(weather);
 
-    final List<Forecast> forecastList = getForecastList(forecastNode, mapper);
+    }
+    if (root.has("location")) {
+      final JsonNode locationNode = root.path("location");
+      checkLocalDateValidity(mapper, locationNode);
+      final Location location = mapper.treeToValue(locationNode, Location.class);
+      weatherData.setLocation(location);
+    }
 
-    weatherData.setCurrentWeather(weather);
-    weatherData.setLocation(location);
-    weatherData.setForecastList(forecastList);
+    if (root.has("forecast")) {
+      final JsonNode forecastNode = root.path("forecast").path("forecastday");
+      final List<Forecast> forecastList = getForecastList(forecastNode, mapper);
+      weatherData.setForecastList(forecastList);
+    }
 
     return weatherData;
 

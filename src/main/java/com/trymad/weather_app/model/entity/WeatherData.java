@@ -15,4 +15,15 @@ public class WeatherData {
   private CurrentWeather currentWeather;
   private List<Forecast> forecastList;
 
+  public boolean containLocation() {
+    return location != null;
+  }
+
+  public boolean containCurrentWeather() {
+    return currentWeather != null;
+  }
+
+  public boolean containForecastList() {
+    return !forecastList.isEmpty();
+  }
 }
