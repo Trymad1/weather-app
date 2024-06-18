@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -66,6 +65,36 @@ public class MainFrame extends JFrame {
         setSize(getWindowDimension(environment));
     }
 
+    private ClassPathResource getImageResouce(String path) {
+        return new ClassPathResource(path);
+    }
+
+    private Dimension getWindowDimension(Environment env) {
+        return new Dimension(
+                Integer.valueOf(env.getProperty("application.view.window.width")),
+                Integer.valueOf(env.getProperty("application.view.window.height")));
+    }
+
+    private void loadImages() throws IOException {
+        windImageLabel.setIcon(
+                new javax.swing.ImageIcon(getImageResouce(WIND_IMAGE_PATH).getURL()));
+
+        weatherImageLabel1.setIcon(
+                new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
+
+        waterImageLabel.setIcon(
+                new javax.swing.ImageIcon(getImageResouce(WATER_IMAGE_PATH).getURL()));
+
+        forecastImageDay2.setIcon(
+                new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
+
+        forecastImageDay1
+                .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
+
+        forecastImageDay3
+                .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
+    }
+
     private void initComponents() throws IOException {
 
         mainWeatherPanel = new javax.swing.JPanel();
@@ -114,54 +143,45 @@ public class MainFrame extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cityFindTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cityFindTextField.setFont(new java.awt.Font("Segoe UI", 0, 18));
 
-        cityFindButton.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        cityFindButton.setFont(new java.awt.Font("Segoe UI", 0, 15));
         cityFindButton.setText("=>");
 
         currentWeatherPanel
                 .setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         currentWeatherPanel.setPreferredSize(new java.awt.Dimension(475, 390));
 
-        windImageLabel.setIcon(
-                new javax.swing.ImageIcon(getImageResouce(WIND_IMAGE_PATH).getURL())); // NOI18N
-
-        weatherImageLabel1.setIcon(
-                new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
-
-        windInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        windInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18));
         windInfoLabel.setText("16,2 м/c, СЗ");
 
-        waterPercentsLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        waterPercentsLabel.setFont(new java.awt.Font("sansserif", 0, 18));
         waterPercentsLabel.setText("100%");
 
-        waterImageLabel.setIcon(
-                new javax.swing.ImageIcon(getImageResouce(WATER_IMAGE_PATH).getURL())); // NOI18N
-
-        temperatureLabel.setFont(new java.awt.Font("sansserif", 0, 40)); // NOI18N
+        temperatureLabel.setFont(new java.awt.Font("sansserif", 0, 40));
         temperatureLabel.setText("+26°");
         temperatureLabel.setToolTipText("");
 
-        weatherInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        weatherInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18));
         weatherInfoLabel.setText("Облачно с прояснениями");
 
-        weatherFeelsInfoLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        weatherFeelsInfoLabel.setFont(new java.awt.Font("sansserif", 0, 14));
         weatherFeelsInfoLabel.setForeground(new java.awt.Color(102, 102, 102));
         weatherFeelsInfoLabel.setText("Ощущается как");
 
-        cityYesterdayTimeInfoLabel.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        cityYesterdayTimeInfoLabel.setFont(new java.awt.Font("sansserif", 0, 15));
         cityYesterdayTimeInfoLabel.setForeground(new java.awt.Color(102, 102, 102));
         cityYesterdayTimeInfoLabel.setText("Сейчас 13:16. Вчера в это время");
 
-        cityYesterdayTemperatureLabel.setFont(new java.awt.Font("sansserif", 0, 19)); // NOI18N
+        cityYesterdayTemperatureLabel.setFont(new java.awt.Font("sansserif", 0, 19));
         cityYesterdayTemperatureLabel.setForeground(new java.awt.Color(51, 51, 51));
         cityYesterdayTemperatureLabel.setText("15°");
 
-        cityNameLabel.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
+        cityNameLabel.setFont(new java.awt.Font("sansserif", 0, 36));
         cityNameLabel.setText("Санкт-петербург");
         cityNameLabel.setPreferredSize(new java.awt.Dimension(275, 50));
 
-        temperatureFeelsLabel.setFont(new java.awt.Font("sansserif", 0, 19)); // NOI18N
+        temperatureFeelsLabel.setFont(new java.awt.Font("sansserif", 0, 19));
         temperatureFeelsLabel.setForeground(new java.awt.Color(51, 51, 51));
         temperatureFeelsLabel.setText("+28°");
 
@@ -323,20 +343,17 @@ public class MainFrame extends JFrame {
         forecastDaysPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         forecastDaysPanel.setPreferredSize(new java.awt.Dimension(325, 390));
 
-        forecastImageDay3
-                .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL())); // NOI18N
-
-        forecastTemperatureDay3.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        forecastTemperatureDay3.setFont(new java.awt.Font("sansserif", 0, 15));
         forecastTemperatureDay3.setText("+33°");
 
         forecastFeelTemperatureDay3.setForeground(new java.awt.Color(102, 102, 102));
         forecastFeelTemperatureDay3.setText("+32°");
 
-        forecastDateDay3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        forecastDateDay3.setFont(new java.awt.Font("sansserif", 0, 14));
         forecastDateDay3.setForeground(new java.awt.Color(102, 102, 102));
         forecastDateDay3.setText("21 июня");
 
-        forecastWeekendDay3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        forecastWeekendDay3.setFont(new java.awt.Font("sansserif", 0, 16));
         forecastWeekendDay3.setText("Пт");
 
         forecastConditionPaneDay3.setBorder(null);
@@ -405,20 +422,17 @@ public class MainFrame extends JFrame {
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)));
 
-        forecastImageDay2
-                .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL())); // NOI18N
-
-        forecastTemperatureDay2.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        forecastTemperatureDay2.setFont(new java.awt.Font("sansserif", 0, 15));
         forecastTemperatureDay2.setText("+32°");
 
         forecastFeelTemperatureDay2.setForeground(new java.awt.Color(102, 102, 102));
         forecastFeelTemperatureDay2.setText("+36°");
 
-        forecastDateDay2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        forecastDateDay2.setFont(new java.awt.Font("sansserif", 0, 14));
         forecastDateDay2.setForeground(new java.awt.Color(102, 102, 102));
         forecastDateDay2.setText("20 июня");
 
-        forecastWeekendDay2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        forecastWeekendDay2.setFont(new java.awt.Font("sansserif", 0, 16));
         forecastWeekendDay2.setText("Чт");
 
         forecastConditionPaneDay2.setBorder(null);
@@ -487,20 +501,17 @@ public class MainFrame extends JFrame {
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)));
 
-        forecastImageDay1
-                .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL())); // NOI18N
-
-        forecastTemperatureDay1.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        forecastTemperatureDay1.setFont(new java.awt.Font("sansserif", 0, 15));
         forecastTemperatureDay1.setText("+30°");
 
         forecastFeelTemperatureDay1.setForeground(new java.awt.Color(102, 102, 102));
         forecastFeelTemperatureDay1.setText("+34°");
 
-        forecastDateDay1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        forecastDateDay1.setFont(new java.awt.Font("sansserif", 0, 14));
         forecastDateDay1.setForeground(new java.awt.Color(102, 102, 102));
         forecastDateDay1.setText("19 июня");
 
-        forecastWeekendDay1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        forecastWeekendDay1.setFont(new java.awt.Font("sansserif", 0, 16));
         forecastWeekendDay1.setText("Ср");
 
         forecastConditionPaneDay1.setBorder(null);
@@ -624,15 +635,5 @@ public class MainFrame extends JFrame {
                                 .addContainerGap()));
 
         pack();
-    }
-
-    private ClassPathResource getImageResouce(String path) {
-        return new ClassPathResource(path);
-    }
-
-    private Dimension getWindowDimension(Environment env) {
-        return new Dimension(
-                Integer.valueOf(env.getProperty("application.view.window.width")),
-                Integer.valueOf(env.getProperty("application.view.window.height")));
     }
 }
