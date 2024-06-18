@@ -1,16 +1,30 @@
 package com.trymad.weather_app.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import com.trymad.weather_app.presenter.MainFramePresenter;
+
+import lombok.Getter;
+
 @Component
+@Getter
 public class MainFrame extends JFrame {
+
+    private final MainFramePresenter mainFramePresenter;
 
     private javax.swing.JButton cityFindButton;
     private javax.swing.JTextField cityFindTextField;
@@ -60,10 +74,14 @@ public class MainFrame extends JFrame {
     private final String WATER_IMAGE_PATH = "static/image/water.png";
     private final String TEST_IMAGE_PATH = "static/image/test.png";
 
-    public MainFrame(Environment environment) throws IOException {
+    public MainFrame(Environment environment, MainFramePresenter mainFramePresenter) throws IOException {
+        this.mainFramePresenter = mainFramePresenter;
+
         initComponents();
         setSize(getWindowDimension(environment));
         clearFields();
+        addActionListeners();
+
     }
 
     private ClassPathResource getImageResouce(String path) {
@@ -94,6 +112,29 @@ public class MainFrame extends JFrame {
 
         forecastImageDay3
                 .setIcon(new javax.swing.ImageIcon(getImageResouce(TEST_IMAGE_PATH).getURL()));
+    }
+
+    private void addActionListeners() {
+        cityFindButton.addActionListener(mainFramePresenter::searchButtonPressed);
+        assignHotkey(cityFindButton, "ENTER");
+    }
+
+    private void assignHotkey(JButton button, String key) {
+        String actionName = "doClick";
+
+        InputMap inputMap = button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = button.getActionMap();
+
+        KeyStroke keyStroke = KeyStroke.getKeyStroke(key);
+
+        inputMap.put(keyStroke, actionName);
+
+        actionMap.put(actionName, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                button.doClick();
+            }
+        });
     }
 
     private void clearFields() {
