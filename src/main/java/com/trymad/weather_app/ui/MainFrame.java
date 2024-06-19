@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -85,6 +86,7 @@ public class MainFrame extends JFrame {
 		this.mainFramePresenter = mainFramePresenter;
 		this.forecastPanels = new ArrayList<>();
 
+		setTitle("Прогноз погоды");
 		initComponents();
 		initCurrentForecastPanels();
 		setSize(getWindowDimension(environment));
@@ -104,6 +106,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private void loadImages() throws IOException {
+		setIconImage(ImageIO.read(getImageResouce(TEST_IMAGE_PATH).getInputStream()));
 		windImageLabel.setIcon(
 				new javax.swing.ImageIcon(getImageResouce(WIND_IMAGE_PATH).getURL()));
 
