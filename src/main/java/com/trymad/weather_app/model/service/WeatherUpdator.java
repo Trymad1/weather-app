@@ -2,11 +2,9 @@ package com.trymad.weather_app.model.service;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,7 +83,6 @@ public class WeatherUpdator {
     frame.getWeatherImageLabel1().setIcon(getImageIcon(currentWeather.getCondition().getIcon()));
 
     setForecastData(currentForecast);
-
   }
 
   // TODO hardcode forecast need fix

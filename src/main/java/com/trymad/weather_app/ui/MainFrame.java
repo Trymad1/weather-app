@@ -1,6 +1,7 @@
 package com.trymad.weather_app.ui;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -10,6 +11,7 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import org.springframework.core.env.Environment;
@@ -79,6 +81,7 @@ public class MainFrame extends JFrame {
 		this.mainFramePresenter = mainFramePresenter;
 
 		initComponents();
+		initCurrentForecastPanels();
 		setSize(getWindowDimension(environment));
 		addActionListeners();
 		setResizable(false);
@@ -138,6 +141,10 @@ public class MainFrame extends JFrame {
 				button.doClick();
 			}
 		});
+	}
+
+	private void initCurrentForecastPanels() {
+		forecastMainPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 	}
 
 	private void initComponents() throws IOException {

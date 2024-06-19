@@ -6,7 +6,6 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 @Component
