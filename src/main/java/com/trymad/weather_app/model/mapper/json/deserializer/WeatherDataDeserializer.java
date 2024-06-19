@@ -37,7 +37,7 @@ public class WeatherDataDeserializer extends JsonDeserializer<WeatherData> {
       weatherData.setCurrentWeather(weather);
 
     }
-    
+
     if (root.has("location")) {
       final JsonNode locationNode = root.path("location");
       checkLocalDateValidity(mapper, locationNode);
@@ -92,13 +92,13 @@ public class WeatherDataDeserializer extends JsonDeserializer<WeatherData> {
 
   // I would like to apologize for this crutch, but it is necessary,
   // because for some reason the API returns the date in the H:mm format
-  // when the time is 00:00, and you have to manually adjust the value to the
+  // when the time is 00:00 - 09:00, and you have to manually adjust the value to the
   // desired format
   private void checkLocalDateValidity(ObjectMapper mapper, JsonNode node) throws JsonProcessingException {
     String data = node.get("localtime").asText();
     if (data.length() < 16) {
-      String date = data.substring(0, 12);
-      String time = data.substring(12, data.length());
+      String date = data.substring(0, 11);
+      String time = data.substring(11, data.length());
       String newData = date + "0" + time;
 
       ObjectNode objectNode = (ObjectNode) node;

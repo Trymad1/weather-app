@@ -29,24 +29,35 @@ public class ApiWeatherLoader implements WeatherLoader {
 
   @Override
   public WeatherData getForecastDataByCityName(String cityName, int days, boolean aqi, boolean alerts) {
-    final WeatherData response = restClient.get()
-        .uri(generateForecastParamRequest(cityName, days, aqi, alerts))
-        .accept(DATA_FORMAT)
-        .retrieve()
-        .body(WeatherData.class);
+    WeatherData weatherData = null;
+    try {
+      weatherData = restClient.get()
+          .uri(generateForecastParamRequest(cityName, days, aqi, alerts))
+          .accept(DATA_FORMAT)
+          .retrieve()
+          .body(WeatherData.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-    return response;
+    return weatherData;
   }
 
   @Override
   public WeatherData getHistoryDataByCityName(String cityName, LocalDate date) {
-    final WeatherData response = restClient.get()
-        .uri(generateHistoryParamRequest(cityName, date))
-        .accept(DATA_FORMAT)
-        .retrieve()
-        .body(WeatherData.class);
+    WeatherData weatherData = null;
 
-    return response;
+    try {
+      weatherData = restClient.get()
+          .uri(generateHistoryParamRequest(cityName, date))
+          .accept(DATA_FORMAT)
+          .retrieve()
+          .body(WeatherData.class);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return weatherData;
   }
 
   private MediaType getFileFormat(String fileFormat) {
