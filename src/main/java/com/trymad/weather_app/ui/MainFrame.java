@@ -248,7 +248,7 @@ public class MainFrame extends JFrame {
 
 		cityNameLabel.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
 		cityNameLabel.setText("Санкт-петербург");
-		cityNameLabel.setPreferredSize(new java.awt.Dimension(275, 50));
+		cityNameLabel.setPreferredSize(new java.awt.Dimension(350, 50));
 
 		temperatureFeelsLabel.setFont(new java.awt.Font("sansserif", 0, 19)); // NOI18N
 		temperatureFeelsLabel.setForeground(new java.awt.Color(51, 51, 51));
@@ -259,7 +259,7 @@ public class MainFrame extends JFrame {
 
 		forecastMainPanel.setPreferredSize(new java.awt.Dimension(1700, 145));
 		forecastMain.getHorizontalScrollBar()
-				.setPreferredSize(new Dimension(forecastMain.getHorizontalScrollBar().getWidth(), 8));
+				.setPreferredSize(new Dimension(forecastMain.getHorizontalScrollBar().getWidth(), 11));
 
 		javax.swing.GroupLayout forecastMainPanelLayout = new javax.swing.GroupLayout(forecastMainPanel);
 		forecastMainPanel.setLayout(forecastMainPanelLayout);
@@ -287,7 +287,7 @@ public class MainFrame extends JFrame {
 												.addGap(0, 0, 0)
 												.addComponent(cityYesterdayTemperatureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addComponent(cityNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 335,
+										.addComponent(cityNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
 												.addComponent(temperatureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 87,

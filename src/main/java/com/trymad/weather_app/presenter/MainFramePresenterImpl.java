@@ -2,6 +2,8 @@ package com.trymad.weather_app.presenter;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,13 @@ public class MainFramePresenterImpl implements MainFramePresenter {
       return;
     System.out.println("Fetch");
     currentCity = cityName;
-    weatherUpdator.updateWeatherInformation(cityName);
+    try {
+      weatherUpdator.updateWeatherInformation(cityName);
+    } catch (IllegalAccessError e) {
+      JOptionPane.showMessageDialog((java.awt.Component) event.getSource(),
+          "Город " + cityName + " не найден, или отсутствует подключение к интернету",
+          "Ошибка",
+          JOptionPane.ERROR_MESSAGE);
+    }
   }
 }
