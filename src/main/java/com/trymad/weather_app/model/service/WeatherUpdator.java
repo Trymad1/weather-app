@@ -1,8 +1,12 @@
 package com.trymad.weather_app.model.service;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.ImageIcon;
 
 import org.springframework.stereotype.Component;
 
@@ -10,6 +14,7 @@ import com.trymad.weather_app.model.entity.CurrentWeather;
 import com.trymad.weather_app.model.entity.Forecast;
 import com.trymad.weather_app.model.entity.Location;
 import com.trymad.weather_app.model.entity.WeatherData;
+import com.trymad.weather_app.model.loader.ImageLoader;
 import com.trymad.weather_app.model.service.localizer.Localizer;
 import com.trymad.weather_app.ui.MainFrame;
 
@@ -23,10 +28,12 @@ public class WeatherUpdator {
   private final static boolean AQI = false;
   private final static boolean ALERTS = false;
   private final static String DEFAULT_LANGUAGE_ISO = "ru";
+  private final static String URL_PROTOCOL = "http:";
 
   private final MainFrame frame;
   private final WeatherDataService weatherDataService;
   private final Localizer localizer;
+  private final ImageLoader imageLoader;
 
   private WeatherData currentWeatherData;
   private WeatherData historyWeatherData;
@@ -68,6 +75,13 @@ public class WeatherUpdator {
     frame.getWaterPercentsLabel().setText(currentWeather.getHumidity() + "%");
     frame.getWindInfoLabel().setText(currentWeather.getWind_mph() + " м/ч");
     frame.getWeatherInfoLabel().setText(currentWeather.getCondition().getText());
+
+    try {
+      frame.getWeatherImageLabel1().setIcon(
+          new ImageIcon(imageLoader.loadImage(new URL(URL_PROTOCOL + currentWeather.getCondition().getIcon()))));
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    }
   }
 
   private String getTemperature(float temp) {

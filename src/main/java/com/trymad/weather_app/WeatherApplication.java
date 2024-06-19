@@ -24,6 +24,7 @@ public class WeatherApplication {
 				.run(args);
 
 		FlatDarkLaf.setup();
+
 		SwingUtilities.invokeLater(() -> {
 			JFrame mainFrame = context.getBean(MainFrame.class);
 			WeatherUpdator weatherUpdator = context.getBean(WeatherUpdator.class);
