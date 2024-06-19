@@ -210,9 +210,12 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		loadImages();
 
+		waterImageLabel.setToolTipText("Процент осадков");
+		windImageLabel.setToolTipText("Скорость ветра");
+
 		cityFindTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-		cityFindButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+		cityFindButton.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
 		cityFindButton.setText("=>");
 
 		currentWeatherPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -301,7 +304,7 @@ public class MainFrame extends JFrame {
 																		.addComponent(temperatureFeelsLabel))
 																.addComponent(weatherInfoLabel)))
 										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
-												.addGap(70, 70, 70)
+												.addGap(0, 0, 0)
 												.addComponent(waterImageLabel)
 												.addGap(0, 0, 0)
 												.addComponent(waterPercentsLabel)

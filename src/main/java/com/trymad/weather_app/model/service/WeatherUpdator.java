@@ -136,6 +136,7 @@ public class WeatherUpdator {
       final CurrentForecastPanel panel = forecastIterator.next();
       panel.getForecastMainImage1().setIcon(getImageIcon(hour.getCondition().getIcon()));
       panel.getForecastTemperature1().setText(getTemperature(hour.getTemp_c()));
+      panel.setToolTipText(hour.getCondition().getText());
     }
   }
 
