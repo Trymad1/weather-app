@@ -10,6 +10,7 @@ import com.trymad.weather_app.model.entity.CurrentWeather;
 import com.trymad.weather_app.model.entity.Forecast;
 import com.trymad.weather_app.model.entity.Location;
 import com.trymad.weather_app.model.entity.WeatherData;
+import com.trymad.weather_app.model.service.localizer.Localizer;
 import com.trymad.weather_app.ui.MainFrame;
 
 import lombok.RequiredArgsConstructor;
@@ -18,16 +19,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WeatherUpdator {
 
-  private final MainFrame frame;
-  private final WeatherDataService weatherDataService;
-  private WeatherData currentWeatherData;
-  private WeatherData historyWeatherData;
-
   private final static int DAYS_FOR_FORECAST = 3;
   private final static boolean AQI = false;
   private final static boolean ALERTS = false;
+  private final static String DEFAULT_LANGUAGE_ISO = "ru";
 
-  public void getWeatherInformation(String city) {
+  private final MainFrame frame;
+  private final WeatherDataService weatherDataService;
+  private final Localizer localizer;
+
+  private WeatherData currentWeatherData;
+  private WeatherData historyWeatherData;
+
+  public void updateWeatherInformation(String city) {
     Optional<WeatherData> optionalData = weatherDataService.getForecastData(city, DAYS_FOR_FORECAST, AQI, ALERTS);
     if (optionalData.isEmpty()) {
       // TODO handling
@@ -36,8 +40,11 @@ public class WeatherUpdator {
 
     currentWeatherData = optionalData.get();
     historyWeatherData = weatherDataService.getHistoryData(city, LocalDate.now().minusDays(1)).get();
-    setDataToView();
 
+    localizer.localizeWeatherData(currentWeatherData, DEFAULT_LANGUAGE_ISO);
+    localizer.localizeWeatherData(historyWeatherData, DEFAULT_LANGUAGE_ISO);
+
+    setDataToView();
   }
 
   private void setDataToView() {
@@ -60,6 +67,7 @@ public class WeatherUpdator {
     frame.getTemperatureFeelsLabel().setText(getTemperature(currentWeather.getFeelslike_c()));
     frame.getWaterPercentsLabel().setText(currentWeather.getHumidity() + "%");
     frame.getWindInfoLabel().setText(currentWeather.getWind_mph() + " м/ч");
+    frame.getWeatherInfoLabel().setText(currentWeather.getCondition().getText());
   }
 
   private String getTemperature(float temp) {

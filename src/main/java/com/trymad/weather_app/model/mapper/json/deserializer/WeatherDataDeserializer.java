@@ -92,7 +92,7 @@ public class WeatherDataDeserializer extends JsonDeserializer<WeatherData> {
 
   // I would like to apologize for this crutch, but it is necessary,
   // because for some reason the API returns the date in the H:mm format
-  // when the time is 00:00, and you have to manually adjust the value to the
+  // when the time is 00:00 - 09:00, and you have to manually adjust the value to the
   // desired format
   private void checkLocalDateValidity(ObjectMapper mapper, JsonNode node) throws JsonProcessingException {
     String data = node.get("localtime").asText();

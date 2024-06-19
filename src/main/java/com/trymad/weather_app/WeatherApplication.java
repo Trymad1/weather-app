@@ -27,9 +27,8 @@ public class WeatherApplication {
 		SwingUtilities.invokeLater(() -> {
 			JFrame mainFrame = context.getBean(MainFrame.class);
 			WeatherUpdator weatherUpdator = context.getBean(WeatherUpdator.class);
-			weatherUpdator.getWeatherInformation(START_CITY_FOR_DISPLAY);
+			weatherUpdator.updateWeatherInformation(START_CITY_FOR_DISPLAY);
 			mainFrame.setVisible(true);
-
 		});
 	}
 }
