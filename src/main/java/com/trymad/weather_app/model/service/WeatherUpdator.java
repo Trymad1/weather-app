@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.trymad.weather_app.model.entity.Location;
 import com.trymad.weather_app.model.entity.WeatherData;
 import com.trymad.weather_app.model.loader.ImageLoader;
 import com.trymad.weather_app.model.service.localizer.Localizer;
+import com.trymad.weather_app.ui.CurrentForecastPanel;
 import com.trymad.weather_app.ui.MainFrame;
 
 import lombok.RequiredArgsConstructor;
@@ -83,6 +85,7 @@ public class WeatherUpdator {
     frame.getWeatherImageLabel1().setIcon(getImageIcon(currentWeather.getCondition().getIcon()));
 
     setForecastData(currentForecast);
+    setCurrentForecastHoursData(currentForecast.get(0).getHours());
   }
 
   // TODO hardcode forecast need fix
@@ -121,6 +124,19 @@ public class WeatherUpdator {
     frame.getForecastCondititonDay3().setText(forecastDay3.getCondition().getText());
     frame.getForecastWeekendDay3().setText(ruWeekendShortNames.get(forecastDay3.getDate().getDayOfWeek().getValue()));
     frame.getForecastDateDay3().setText(forecastDay3.getDate().format(formatter));
+  }
+
+  private void setCurrentForecastHoursData(List<CurrentWeather> hours) {
+    final List<CurrentForecastPanel> forecastPanels = frame.getForecastPanels();
+    final Iterator<CurrentWeather> hoursIterator = hours.iterator();
+    final Iterator<CurrentForecastPanel> forecastIterator = forecastPanels.iterator();
+
+    for (int i = 0; i < 23; i++) {
+      final CurrentWeather hour = hoursIterator.next();
+      final CurrentForecastPanel panel = forecastIterator.next();
+      panel.getForecastMainImage1().setIcon(getImageIcon(hour.getCondition().getIcon()));
+      panel.getForecastTemperature1().setText(getTemperature(hour.getTemp_c()));
+    }
   }
 
   // TODO fix this trash

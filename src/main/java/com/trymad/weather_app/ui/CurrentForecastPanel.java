@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 
 import org.springframework.core.io.ClassPathResource;
 
+import lombok.Getter;
+
+@Getter
 public class CurrentForecastPanel extends JPanel {
 
     private javax.swing.JLabel forecastMainImage1;
@@ -16,6 +19,7 @@ public class CurrentForecastPanel extends JPanel {
 
     public CurrentForecastPanel() {
         initComponents();
+
     }
 
     private void initComponents() {

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -77,8 +79,11 @@ public class MainFrame extends JFrame {
 	private final String TEST_IMAGE_PATH = "static/image/test.png";
 	public final String TIME_TEMPLATE = "Сейчас %s. Вчера в это время";
 
+	private List<CurrentForecastPanel> forecastPanels;
+
 	public MainFrame(Environment environment, MainFramePresenter mainFramePresenter) throws IOException {
 		this.mainFramePresenter = mainFramePresenter;
+		this.forecastPanels = new ArrayList<>();
 
 		initComponents();
 		initCurrentForecastPanels();
@@ -145,6 +150,15 @@ public class MainFrame extends JFrame {
 
 	private void initCurrentForecastPanels() {
 		forecastMainPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		for (int i = 0; i < 24; i++) {
+
+			String time = String.format("%02d:00", i);
+			final CurrentForecastPanel currentForecastPanel = new CurrentForecastPanel();
+			currentForecastPanel.getForecastTime1().setText(time);
+
+			forecastPanels.add(currentForecastPanel);
+			forecastMainPanel.add(currentForecastPanel);
+		}
 	}
 
 	private void initComponents() throws IOException {
@@ -194,62 +208,61 @@ public class MainFrame extends JFrame {
 		forecastConditionDay1 = new javax.swing.JTextArea();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
 		loadImages();
 
-		cityFindTextField.setFont(new java.awt.Font("Segoe UI", 0, 18));
+		cityFindTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-		cityFindButton.setFont(new java.awt.Font("Segoe UI", 0, 15));
+		cityFindButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 		cityFindButton.setText("=>");
 
-		currentWeatherPanel
-				.setBorder(javax.swing.BorderFactory
-						.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		currentWeatherPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		currentWeatherPanel.setPreferredSize(new java.awt.Dimension(475, 390));
 
-		windInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18));
+		windInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 		windInfoLabel.setText("16,2 м/c, СЗ");
 
-		waterPercentsLabel.setFont(new java.awt.Font("sansserif", 0, 18));
+		waterPercentsLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 		waterPercentsLabel.setText("100%");
 
-		temperatureLabel.setFont(new java.awt.Font("sansserif", 0, 40));
+		temperatureLabel.setFont(new java.awt.Font("sansserif", 0, 40)); // NOI18N
 		temperatureLabel.setText("+26°");
 		temperatureLabel.setToolTipText("");
 
-		weatherInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18));
+		weatherInfoLabel.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 		weatherInfoLabel.setText("Облачно с прояснениями");
 
-		weatherFeelsInfoLabel.setFont(new java.awt.Font("sansserif", 0, 14));
+		weatherFeelsInfoLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 		weatherFeelsInfoLabel.setForeground(new java.awt.Color(102, 102, 102));
 		weatherFeelsInfoLabel.setText("Ощущается как");
 
-		cityYesterdayTimeInfoLabel.setFont(new java.awt.Font("sansserif", 0, 15));
+		cityYesterdayTimeInfoLabel.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
 		cityYesterdayTimeInfoLabel.setForeground(new java.awt.Color(102, 102, 102));
 		cityYesterdayTimeInfoLabel.setText("Сейчас 13:16. Вчера в это время");
 
-		cityYesterdayTemperatureLabel.setFont(new java.awt.Font("sansserif", 0, 19));
+		cityYesterdayTemperatureLabel.setFont(new java.awt.Font("sansserif", 0, 19)); // NOI18N
 		cityYesterdayTemperatureLabel.setForeground(new java.awt.Color(51, 51, 51));
 		cityYesterdayTemperatureLabel.setText("15°");
 
-		cityNameLabel.setFont(new java.awt.Font("sansserif", 0, 36));
+		cityNameLabel.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
 		cityNameLabel.setText("Санкт-петербург");
 		cityNameLabel.setPreferredSize(new java.awt.Dimension(275, 50));
 
-		temperatureFeelsLabel.setFont(new java.awt.Font("sansserif", 0, 19));
+		temperatureFeelsLabel.setFont(new java.awt.Font("sansserif", 0, 19)); // NOI18N
 		temperatureFeelsLabel.setForeground(new java.awt.Color(51, 51, 51));
 		temperatureFeelsLabel.setText("+28°");
 
 		forecastMain.setBorder(null);
 		forecastMain.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-		forecastMainPanel.setPreferredSize(new java.awt.Dimension(1820, 145));
+		forecastMainPanel.setPreferredSize(new java.awt.Dimension(1700, 145));
+		forecastMain.getHorizontalScrollBar()
+				.setPreferredSize(new Dimension(forecastMain.getHorizontalScrollBar().getWidth(), 8));
 
 		javax.swing.GroupLayout forecastMainPanelLayout = new javax.swing.GroupLayout(forecastMainPanel);
 		forecastMainPanel.setLayout(forecastMainPanelLayout);
 		forecastMainPanelLayout.setHorizontalGroup(
 				forecastMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 1820, Short.MAX_VALUE));
+						.addGap(0, 424, Short.MAX_VALUE));
 		forecastMainPanelLayout.setVerticalGroup(
 				forecastMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGap(0, 145, Short.MAX_VALUE));
@@ -260,143 +273,85 @@ public class MainFrame extends JFrame {
 		currentWeatherPanel.setLayout(currentWeatherPanelLayout);
 		currentWeatherPanelLayout.setHorizontalGroup(
 				currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-								currentWeatherPanelLayout
-										.createSequentialGroup()
-										.addContainerGap(14, Short.MAX_VALUE)
-										.addGroup(currentWeatherPanelLayout
-												.createParallelGroup(
-														javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(forecastMain,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														451,
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, currentWeatherPanelLayout.createSequentialGroup()
+								.addContainerGap(14, Short.MAX_VALUE)
+								.addGroup(currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(forecastMain, javax.swing.GroupLayout.PREFERRED_SIZE, 451,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
+												.addComponent(cityYesterdayTimeInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 232,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addGroup(currentWeatherPanelLayout
-														.createSequentialGroup()
-														.addComponent(cityYesterdayTimeInfoLabel,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																232,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addGap(0, 0, 0)
-														.addComponent(cityYesterdayTemperatureLabel,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																41,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addComponent(cityNameLabel,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														335,
+												.addGap(0, 0, 0)
+												.addComponent(cityYesterdayTemperatureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41,
+														javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addComponent(cityNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 335,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
+												.addComponent(temperatureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 87,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addGroup(currentWeatherPanelLayout
-														.createSequentialGroup()
-														.addComponent(temperatureLabel,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																87,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addComponent(weatherImageLabel1,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																64,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addGap(43, 43, 43)
-														.addGroup(
-																currentWeatherPanelLayout
-																		.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																		.addGroup(currentWeatherPanelLayout
-																				.createSequentialGroup()
-																				.addComponent(weatherFeelsInfoLabel)
-																				.addPreferredGap(
-																						javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																				.addComponent(temperatureFeelsLabel))
-																		.addComponent(weatherInfoLabel)))
-												.addGroup(currentWeatherPanelLayout
-														.createSequentialGroup()
-														.addGap(70, 70, 70)
-														.addComponent(waterImageLabel)
-														.addGap(0, 0, 0)
-														.addComponent(waterPercentsLabel)
-														.addGap(18, 18, 18)
-														.addComponent(windImageLabel)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addComponent(windInfoLabel,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																109,
-																javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(weatherImageLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addGap(23, 23, 23)
+												.addGroup(
+														currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+																.addGroup(currentWeatherPanelLayout.createSequentialGroup()
+																		.addComponent(weatherFeelsInfoLabel)
+																		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(temperatureFeelsLabel))
+																.addComponent(weatherInfoLabel)))
+										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
+												.addGap(70, 70, 70)
+												.addComponent(waterImageLabel)
+												.addGap(0, 0, 0)
+												.addComponent(waterPercentsLabel)
+												.addGap(18, 18, 18)
+												.addComponent(windImageLabel)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(windInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 109,
+														javax.swing.GroupLayout.PREFERRED_SIZE)))
+								.addContainerGap()));
 		currentWeatherPanelLayout.setVerticalGroup(
 				currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(currentWeatherPanelLayout.createSequentialGroup()
 								.addContainerGap()
-								.addComponent(cityNameLabel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(currentWeatherPanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(cityNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 										.addComponent(cityYesterdayTemperatureLabel)
 										.addComponent(cityYesterdayTimeInfoLabel))
 								.addGap(18, 18, 18)
-								.addGroup(currentWeatherPanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(currentWeatherPanelLayout
-												.createSequentialGroup()
-												.addComponent(weatherInfoLabel,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														29,
+								.addGroup(currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
+												.addComponent(weatherInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(
-														javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 												.addGroup(
-														currentWeatherPanelLayout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.BASELINE)
+														currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 																.addComponent(weatherFeelsInfoLabel)
 																.addComponent(temperatureFeelsLabel)))
-										.addComponent(temperatureLabel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												60,
+										.addComponent(temperatureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addComponent(weatherImageLabel1))
 								.addGap(13, 13, 13)
-								.addGroup(currentWeatherPanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(windImageLabel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												50,
+								.addGroup(currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(windImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(waterImageLabel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												50,
+										.addComponent(waterImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGroup(currentWeatherPanelLayout
-												.createSequentialGroup()
+										.addGroup(currentWeatherPanelLayout.createSequentialGroup()
 												.addGap(8, 8, 8)
 												.addGroup(
-														currentWeatherPanelLayout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.LEADING)
-																.addComponent(windInfoLabel,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		34,
+														currentWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+																.addComponent(windInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34,
 																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addComponent(waterPercentsLabel,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		34,
+																.addComponent(waterPercentsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34,
 																		javax.swing.GroupLayout.PREFERRED_SIZE))))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(forecastMain,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(7, Short.MAX_VALUE)));
+								.addGap(0, 0, 0)
+								.addComponent(forecastMain, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout mainWeatherPanelLayout = new javax.swing.GroupLayout(mainWeatherPanel);
 		mainWeatherPanel.setLayout(mainWeatherPanelLayout);
@@ -404,71 +359,48 @@ public class MainFrame extends JFrame {
 				mainWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(mainWeatherPanelLayout.createSequentialGroup()
 								.addContainerGap()
-								.addGroup(mainWeatherPanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(mainWeatherPanelLayout
-												.createSequentialGroup()
-												.addComponent(cityFindTextField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														303,
+								.addGroup(mainWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(mainWeatherPanelLayout.createSequentialGroup()
+												.addComponent(cityFindTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 303,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(
-														javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(cityFindButton,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														55,
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(cityFindButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addComponent(currentWeatherPanel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addComponent(currentWeatherPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addGap(0, 0, Short.MAX_VALUE)));
 		mainWeatherPanelLayout.setVerticalGroup(
 				mainWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(mainWeatherPanelLayout.createSequentialGroup()
 								.addContainerGap()
-								.addGroup(mainWeatherPanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING,
-												false)
-										.addComponent(cityFindButton,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+								.addGroup(mainWeatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+										.addComponent(cityFindButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(cityFindTextField))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(currentWeatherPanel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(currentWeatherPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		forecastDaysPanel.setBorder(
-				javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		forecastDaysPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		forecastDaysPanel.setPreferredSize(new java.awt.Dimension(325, 390));
 
-		forecastTemperatureDay3.setFont(new java.awt.Font("sansserif", 0, 15));
+		forecastTemperatureDay3.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
 		forecastTemperatureDay3.setText("+33°");
 
 		forecastFeelTemperatureDay3.setForeground(new java.awt.Color(102, 102, 102));
 		forecastFeelTemperatureDay3.setText("+32°");
 
-		forecastDateDay3.setFont(new java.awt.Font("sansserif", 0, 14));
+		forecastDateDay3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 		forecastDateDay3.setForeground(new java.awt.Color(102, 102, 102));
 		forecastDateDay3.setText("21 июня");
 
-		forecastWeekendDay3.setFont(new java.awt.Font("sansserif", 0, 16));
+		forecastWeekendDay3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 		forecastWeekendDay3.setText("Пт");
 
 		forecastConditionPaneDay3.setBorder(null);
-		forecastConditionPaneDay3
-				.setHorizontalScrollBarPolicy(
-						javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		forecastConditionPaneDay3
-				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		forecastConditionPaneDay3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		forecastConditionPaneDay3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		forecastCondititonDay3.setEditable(false);
 		forecastCondititonDay3.setColumns(20);
@@ -487,84 +419,62 @@ public class MainFrame extends JFrame {
 		forecastPanelDay3Layout.setHorizontalGroup(
 				forecastPanelDay3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(forecastPanelDay3Layout.createSequentialGroup()
-								.addGroup(forecastPanelDay3Layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(forecastPanelDay3Layout
-												.createSequentialGroup()
+								.addGroup(forecastPanelDay3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(forecastPanelDay3Layout.createSequentialGroup()
 												.addContainerGap()
 												.addComponent(forecastDateDay3))
-										.addGroup(forecastPanelDay3Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay3Layout.createSequentialGroup()
 												.addGap(25, 25, 25)
 												.addComponent(forecastWeekendDay3))
-										.addGroup(forecastPanelDay3Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay3Layout.createSequentialGroup()
 												.addContainerGap()
-												.addComponent(forecastImageDay3,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														64,
+												.addComponent(forecastImageDay3, javax.swing.GroupLayout.PREFERRED_SIZE, 64,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGroup(forecastPanelDay3Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay3Layout.createSequentialGroup()
 												.addGap(21, 21, 21)
-												.addGroup(forecastPanelDay3Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(forecastPanelDay3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(forecastTemperatureDay3)
-														.addGroup(forecastPanelDay3Layout
-																.createSequentialGroup()
+														.addGroup(forecastPanelDay3Layout.createSequentialGroup()
 																.addGap(2, 2, 2)
 																.addComponent(forecastFeelTemperatureDay3)))))
 								.addGap(10, 18, Short.MAX_VALUE))
-						.addComponent(forecastConditionPaneDay3,
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-								Short.MAX_VALUE));
+						.addComponent(forecastConditionPaneDay3, javax.swing.GroupLayout.Alignment.TRAILING,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE));
 		forecastPanelDay3Layout.setVerticalGroup(
 				forecastPanelDay3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-								forecastPanelDay3Layout
-										.createSequentialGroup()
-										.addGap(0, 12, Short.MAX_VALUE)
-										.addComponent(forecastWeekendDay3)
-										.addGap(0, 0, 0)
-										.addComponent(forecastDateDay3,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												19,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, 0)
-										.addComponent(forecastImageDay3)
-										.addGap(0, 0, 0)
-										.addComponent(forecastTemperatureDay3)
-										.addGap(0, 0, 0)
-										.addComponent(forecastFeelTemperatureDay3)
-										.addGap(0, 0, 0)
-										.addComponent(forecastConditionPaneDay3,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												60,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, 0)));
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, forecastPanelDay3Layout.createSequentialGroup()
+								.addGap(0, 12, Short.MAX_VALUE)
+								.addComponent(forecastWeekendDay3)
+								.addGap(0, 0, 0)
+								.addComponent(forecastDateDay3, javax.swing.GroupLayout.PREFERRED_SIZE, 19,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, 0)
+								.addComponent(forecastImageDay3)
+								.addGap(0, 0, 0)
+								.addComponent(forecastTemperatureDay3)
+								.addGap(0, 0, 0)
+								.addComponent(forecastFeelTemperatureDay3)
+								.addGap(0, 0, 0)
+								.addComponent(forecastConditionPaneDay3, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, 0)));
 
-		forecastTemperatureDay2.setFont(new java.awt.Font("sansserif", 0, 15));
+		forecastTemperatureDay2.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
 		forecastTemperatureDay2.setText("+32°");
 
 		forecastFeelTemperatureDay2.setForeground(new java.awt.Color(102, 102, 102));
 		forecastFeelTemperatureDay2.setText("+36°");
 
-		forecastDateDay2.setFont(new java.awt.Font("sansserif", 0, 14));
+		forecastDateDay2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 		forecastDateDay2.setForeground(new java.awt.Color(102, 102, 102));
 		forecastDateDay2.setText("20 июня");
 
-		forecastWeekendDay2.setFont(new java.awt.Font("sansserif", 0, 16));
+		forecastWeekendDay2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 		forecastWeekendDay2.setText("Чт");
 
 		forecastConditionPaneDay2.setBorder(null);
-		forecastConditionPaneDay2
-				.setHorizontalScrollBarPolicy(
-						javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		forecastConditionPaneDay2
-				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		forecastConditionPaneDay2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		forecastConditionPaneDay2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		forecastConditionDay2.setEditable(false);
 		forecastConditionDay2.setColumns(20);
@@ -583,84 +493,62 @@ public class MainFrame extends JFrame {
 		forecastPanelDay2Layout.setHorizontalGroup(
 				forecastPanelDay2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(forecastPanelDay2Layout.createSequentialGroup()
-								.addGroup(forecastPanelDay2Layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(forecastPanelDay2Layout
-												.createSequentialGroup()
+								.addGroup(forecastPanelDay2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(forecastPanelDay2Layout.createSequentialGroup()
 												.addContainerGap()
 												.addComponent(forecastDateDay2))
-										.addGroup(forecastPanelDay2Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay2Layout.createSequentialGroup()
 												.addGap(25, 25, 25)
 												.addComponent(forecastWeekendDay2))
-										.addGroup(forecastPanelDay2Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay2Layout.createSequentialGroup()
 												.addContainerGap()
-												.addComponent(forecastImageDay2,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														64,
+												.addComponent(forecastImageDay2, javax.swing.GroupLayout.PREFERRED_SIZE, 64,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGroup(forecastPanelDay2Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay2Layout.createSequentialGroup()
 												.addGap(21, 21, 21)
-												.addGroup(forecastPanelDay2Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(forecastPanelDay2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(forecastTemperatureDay2)
-														.addGroup(forecastPanelDay2Layout
-																.createSequentialGroup()
+														.addGroup(forecastPanelDay2Layout.createSequentialGroup()
 																.addGap(2, 2, 2)
 																.addComponent(forecastFeelTemperatureDay2)))))
 								.addGap(10, 18, Short.MAX_VALUE))
-						.addComponent(forecastConditionPaneDay2,
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-								Short.MAX_VALUE));
+						.addComponent(forecastConditionPaneDay2, javax.swing.GroupLayout.Alignment.TRAILING,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE));
 		forecastPanelDay2Layout.setVerticalGroup(
 				forecastPanelDay2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-								forecastPanelDay2Layout
-										.createSequentialGroup()
-										.addGap(0, 12, Short.MAX_VALUE)
-										.addComponent(forecastWeekendDay2)
-										.addGap(0, 0, 0)
-										.addComponent(forecastDateDay2,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												19,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, 0)
-										.addComponent(forecastImageDay2)
-										.addGap(0, 0, 0)
-										.addComponent(forecastTemperatureDay2)
-										.addGap(0, 0, 0)
-										.addComponent(forecastFeelTemperatureDay2)
-										.addGap(0, 0, 0)
-										.addComponent(forecastConditionPaneDay2,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												60,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, 0)));
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, forecastPanelDay2Layout.createSequentialGroup()
+								.addGap(0, 12, Short.MAX_VALUE)
+								.addComponent(forecastWeekendDay2)
+								.addGap(0, 0, 0)
+								.addComponent(forecastDateDay2, javax.swing.GroupLayout.PREFERRED_SIZE, 19,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, 0)
+								.addComponent(forecastImageDay2)
+								.addGap(0, 0, 0)
+								.addComponent(forecastTemperatureDay2)
+								.addGap(0, 0, 0)
+								.addComponent(forecastFeelTemperatureDay2)
+								.addGap(0, 0, 0)
+								.addComponent(forecastConditionPaneDay2, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, 0)));
 
-		forecastTemperatureDay1.setFont(new java.awt.Font("sansserif", 0, 15));
+		forecastTemperatureDay1.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
 		forecastTemperatureDay1.setText("+30°");
 
 		forecastFeelTemperatureDay1.setForeground(new java.awt.Color(102, 102, 102));
 		forecastFeelTemperatureDay1.setText("+34°");
 
-		forecastDateDay1.setFont(new java.awt.Font("sansserif", 0, 14));
+		forecastDateDay1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 		forecastDateDay1.setForeground(new java.awt.Color(102, 102, 102));
 		forecastDateDay1.setText("19 июня");
 
-		forecastWeekendDay1.setFont(new java.awt.Font("sansserif", 0, 16));
+		forecastWeekendDay1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 		forecastWeekendDay1.setText("Ср");
 
 		forecastConditionPaneDay1.setBorder(null);
-		forecastConditionPaneDay1
-				.setHorizontalScrollBarPolicy(
-						javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		forecastConditionPaneDay1
-				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		forecastConditionPaneDay1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		forecastConditionPaneDay1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		forecastConditionDay1.setEditable(false);
 		forecastConditionDay1.setColumns(20);
@@ -679,64 +567,45 @@ public class MainFrame extends JFrame {
 		forecastPanelDay1Layout.setHorizontalGroup(
 				forecastPanelDay1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(forecastPanelDay1Layout.createSequentialGroup()
-								.addGroup(forecastPanelDay1Layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(forecastPanelDay1Layout
-												.createSequentialGroup()
+								.addGroup(forecastPanelDay1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(forecastPanelDay1Layout.createSequentialGroup()
 												.addContainerGap()
 												.addComponent(forecastDateDay1))
-										.addGroup(forecastPanelDay1Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay1Layout.createSequentialGroup()
 												.addGap(25, 25, 25)
 												.addComponent(forecastWeekendDay1))
-										.addGroup(forecastPanelDay1Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay1Layout.createSequentialGroup()
 												.addContainerGap()
-												.addComponent(forecastImageDay1,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														64,
+												.addComponent(forecastImageDay1, javax.swing.GroupLayout.PREFERRED_SIZE, 64,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGroup(forecastPanelDay1Layout
-												.createSequentialGroup()
+										.addGroup(forecastPanelDay1Layout.createSequentialGroup()
 												.addGap(21, 21, 21)
-												.addGroup(forecastPanelDay1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(forecastPanelDay1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(forecastTemperatureDay1)
-														.addGroup(forecastPanelDay1Layout
-																.createSequentialGroup()
+														.addGroup(forecastPanelDay1Layout.createSequentialGroup()
 																.addGap(2, 2, 2)
 																.addComponent(forecastFeelTemperatureDay1)))))
 								.addGap(10, 18, Short.MAX_VALUE))
-						.addComponent(forecastConditionPaneDay1,
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-								Short.MAX_VALUE));
+						.addComponent(forecastConditionPaneDay1, javax.swing.GroupLayout.Alignment.TRAILING,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE));
 		forecastPanelDay1Layout.setVerticalGroup(
 				forecastPanelDay1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-								forecastPanelDay1Layout
-										.createSequentialGroup()
-										.addGap(0, 12, Short.MAX_VALUE)
-										.addComponent(forecastWeekendDay1)
-										.addGap(0, 0, 0)
-										.addComponent(forecastDateDay1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												19,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, 0)
-										.addComponent(forecastImageDay1)
-										.addGap(0, 0, 0)
-										.addComponent(forecastTemperatureDay1)
-										.addGap(0, 0, 0)
-										.addComponent(forecastFeelTemperatureDay1)
-										.addGap(0, 0, 0)
-										.addComponent(forecastConditionPaneDay1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												60,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, 0)));
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, forecastPanelDay1Layout.createSequentialGroup()
+								.addGap(0, 12, Short.MAX_VALUE)
+								.addComponent(forecastWeekendDay1)
+								.addGap(0, 0, 0)
+								.addComponent(forecastDateDay1, javax.swing.GroupLayout.PREFERRED_SIZE, 19,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, 0)
+								.addComponent(forecastImageDay1)
+								.addGap(0, 0, 0)
+								.addComponent(forecastTemperatureDay1)
+								.addGap(0, 0, 0)
+								.addComponent(forecastFeelTemperatureDay1)
+								.addGap(0, 0, 0)
+								.addComponent(forecastConditionPaneDay1, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, 0)));
 
 		javax.swing.GroupLayout forecastDaysPanelLayout = new javax.swing.GroupLayout(forecastDaysPanel);
 		forecastDaysPanel.setLayout(forecastDaysPanelLayout);
@@ -744,42 +613,26 @@ public class MainFrame extends JFrame {
 				forecastDaysPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(forecastDaysPanelLayout.createSequentialGroup()
 								.addGap(18, 18, 18)
-								.addComponent(forecastPanelDay1,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(forecastPanelDay2,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(forecastPanelDay3,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(forecastPanelDay1, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(forecastPanelDay2, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(forecastPanelDay3, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addContainerGap(21, Short.MAX_VALUE)));
 		forecastDaysPanelLayout.setVerticalGroup(
 				forecastDaysPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(forecastDaysPanelLayout.createSequentialGroup()
 								.addGap(80, 80, 80)
-								.addGroup(forecastDaysPanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(forecastPanelDay3,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(forecastPanelDay1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(forecastPanelDay2,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGroup(forecastDaysPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(forecastPanelDay3, javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(forecastPanelDay1, javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(forecastPanelDay2, javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addContainerGap(94, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -787,33 +640,23 @@ public class MainFrame extends JFrame {
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(layout.createSequentialGroup()
-								.addComponent(mainWeatherPanel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(forecastDaysPanel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+								.addComponent(mainWeatherPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(forecastDaysPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		layout.setVerticalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(mainWeatherPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
+						.addComponent(mainWeatherPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
-								.createSequentialGroup()
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)
-								.addComponent(forecastDaysPanel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(forecastDaysPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addContainerGap()));
 
 		pack();
 	}
+
 }
