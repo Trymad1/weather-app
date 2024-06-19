@@ -1,13 +1,20 @@
 package com.trymad.weather_app.model.service;
 
+import java.awt.Image;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAmount;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.trymad.weather_app.model.entity.CurrentWeather;
@@ -75,12 +82,65 @@ public class WeatherUpdator {
     frame.getWaterPercentsLabel().setText(currentWeather.getHumidity() + "%");
     frame.getWindInfoLabel().setText(currentWeather.getWind_mph() + " м/ч");
     frame.getWeatherInfoLabel().setText(currentWeather.getCondition().getText());
+    frame.getWeatherImageLabel1().setIcon(getImageIcon(currentWeather.getCondition().getIcon()));
 
+    setForecastData(currentForecast);
+
+  }
+
+  // TODO hardcode forecast need fix
+  private void setForecastData(List<Forecast> forecast) {
+    Map<Integer, String> ruWeekendShortNames = Map.of(
+        1, "Пн",
+        2, "Вт",
+        3, "Ср",
+        4, "Чт",
+        5, "Пт",
+        6, "Сб",
+        7, "Вс");
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM", new Locale("ru"));
+
+    Forecast forecastDay1 = forecast.get(0);
+    frame.getForecastImageDay1().setIcon(getImageIcon(forecastDay1.getCondition().getIcon()));
+    frame.getForecastFeelTemperatureDay1().setText(getTemperature(forecastDay1.getAvgtemp_c()));
+    frame.getForecastTemperatureDay1().setText(getTemperature(forecastDay1.getAvgtemp_c()));
+    frame.getForecastConditionDay1().setText(forecastDay1.getCondition().getText());
+    frame.getForecastWeekendDay1().setText(ruWeekendShortNames.get(forecastDay1.getDate().getDayOfWeek().getValue()));
+    frame.getForecastDateDay1().setText(forecastDay1.getDate().format(formatter));
+
+    Forecast forecastDay2 = forecast.get(1);
+    frame.getForecastImageDay2().setIcon(getImageIcon(forecastDay2.getCondition().getIcon()));
+    frame.getForecastFeelTemperatureDay2().setText(getTemperature(forecastDay2.getAvgtemp_c()));
+    frame.getForecastTemperatureDay2().setText(getTemperature(forecastDay2.getAvgtemp_c()));
+    frame.getForecastConditionDay2().setText(forecastDay2.getCondition().getText());
+    frame.getForecastWeekendDay2().setText(ruWeekendShortNames.get(forecastDay2.getDate().getDayOfWeek().getValue()));
+    frame.getForecastDateDay2().setText(forecastDay2.getDate().format(formatter));
+
+    Forecast forecastDay3 = forecast.get(2);
+    frame.getForecastImageDay3().setIcon(getImageIcon(forecastDay3.getCondition().getIcon()));
+    frame.getForecastFeelTemperatureDay3().setText(getTemperature(forecastDay3.getAvgtemp_c()));
+    frame.getForecastTemperatureDay3().setText(getTemperature(forecastDay3.getAvgtemp_c()));
+    frame.getForecastCondititonDay3().setText(forecastDay3.getCondition().getText());
+    frame.getForecastWeekendDay3().setText(ruWeekendShortNames.get(forecastDay3.getDate().getDayOfWeek().getValue()));
+    frame.getForecastDateDay3().setText(forecastDay3.getDate().format(formatter));
+  }
+
+  // TODO fix this trash
+  private ImageIcon getImageIcon(String iconPath) {
     try {
-      frame.getWeatherImageLabel1().setIcon(
-          new ImageIcon(imageLoader.loadImage(new URL(URL_PROTOCOL + currentWeather.getCondition().getIcon()))));
-    } catch (MalformedURLException e) {
+      Image image = imageLoader.loadImage(new URL(URL_PROTOCOL + iconPath));
+      if (image == null)
+        return new ImageIcon(new ClassPathResource("static/image/not_found.png").getURL());
+      return new ImageIcon(image);
+    } catch (IOException e) {
       e.printStackTrace();
+      try {
+        return new ImageIcon(new ClassPathResource("static/image/not_found.png").getURL());
+      } catch (IOException e1) {
+        e1.printStackTrace();
+        return null;
+      }
     }
   }
 

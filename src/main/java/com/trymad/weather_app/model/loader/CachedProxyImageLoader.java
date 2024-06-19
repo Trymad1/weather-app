@@ -26,7 +26,9 @@ public class CachedProxyImageLoader implements ImageLoader {
       return cache.get(url);
     } else {
       final Image image = imageLoader.loadImage(url);
-      cache.put(url, image);
+      if (image != null) {
+        cache.put(url, image);
+      }
       return image;
     }
   }
